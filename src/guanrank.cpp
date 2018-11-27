@@ -12,7 +12,7 @@ class Patient{
         string PatientID;
         double survTime;
         short int status;
-        double rankScore, kmScore;
+        double rankScore, kmScore, normalizeScore;
     Patient (string pid, double ptime, short int pstatus){
         PatientID = pid;
         survTime = ptime;
@@ -21,30 +21,74 @@ class Patient{
         kmScore = 0.0;
         normalizeScore = 0.0;
     }
-}
+};
 
 // read data from csv file 
-vector<Paitent> readFromCSV(ifstream inFile){
+vector<Patient> readFromCSV(ifstream inFile){
     
 }
 
 // calculate K-M score for each patient
-void CalKMscore(&vector<Patient){
+void CalKMscore(vector<Patient>& Patients){
 
 }
 
 // compare patients pairwise and calculate rank score
-void compare(&patient1, &patient2){
-
+void compare(Patient& patient1, Patient& patient2){
+    double p;
+    if (patient1.survTime == patient2.survTime){
+        if (patient1.status == patient2.status){
+            patient1.rankScore += 0.5;
+            patient2.rankScore += 0.5;
+        } else {
+            if (patient1.survTime < patient2.survTime){
+                patient2.rankScore += 1;
+            } else {
+                patient1.rankScore += 1;
+            }
+        }
+    } else{
+        if (patient1.survTime < patient2.survTime){
+            if (patient1.status == 1){
+                patient1.rankScore += 1;
+            } else {
+                if (patient2.status == 1){
+                    patient1.rankScore += (patient1.kmScore - patient2.kmScore)/patient1.kmScore;
+                    patient2.rankScore += patient2.kmScore/patient1.kmScore;
+                } else {
+                    p = (patient1.kmScore - patient2.kmScore)/patient1.kmScore;
+                    patient1.rankScore += 0.5*(1+p);
+                    patient2.rankScore += 0.5*(1-p);
+                }
+            }
+        } else {
+            if (patient2.status == 1){
+                patient2.rankScore += 1;
+            } else {
+                if (patient1.status == 1){
+                    patient2.rankScore += (patient2.kmScore - patient1.kmScore)/patient2.kmScore;
+                    patient1.rankScore += patient1.kmScore/patient2.kmScore;
+                } else {
+                    p = (patient2.kmScore - patient1.kmScore)/patient2.kmScore;
+                    patient2.rankScore += 0.5*(1+p);
+                    patient1.rankScore += 0.5*(1-p);
+                }
+            }
+        }
+    }
 }
 
 // calculate GuanRank score based on comparison
-void GuanRank(&vector<Patient>){
-
+void GuanRank(vector<Patient>& Patients){
+    for (int i=0; i<Patients.size(); i++){
+        for (int j=i+1; j<Patients.size(); j++){
+            compare(Patients[i], Patients[j]);
+        }
+    } 
 }
 
 // normalize GuanRank score
-void normalize(&vector<Patient>){
+void normalize(vector<Patient>& Patients){
 
 }
 
