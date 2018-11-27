@@ -18,7 +18,8 @@ class Patient{
         survTime = ptime;
         status = pstatus; 
         rankScore = 0.0;
-        kmScore = 0.0
+        kmScore = 0.0;
+        normalizeScore = 0.0;
     }
 }
 
@@ -47,6 +48,10 @@ void normalize(&vector<Patient>){
 
 }
 
+// output to csv file
+void outputToCSV(vector<Patient>& Patients, ifstream outFile){
+    
+}
 
 int main(int argc, char const *argv[])
 {
