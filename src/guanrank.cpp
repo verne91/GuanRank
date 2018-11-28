@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <algorithm>
+
 using namespace std;
 
 // data structure for each sample
@@ -23,12 +26,44 @@ public:
 };
 // read data from csv file
 vector<Patient> readFromCSV(ifstream inFile){
-    
+        vector<Patient> temp_vec;
+        string line;
+
+        while(getline(inFile, line)){
+                istringstream iss(line);
+
+                string time, id, status;
+
+                getline(iss, id, ',');
+                getline(iss, time, ',');
+                getline(iss, status, ',');
+
+                Patient p(id, atof(time.c_str()), atoi(status.c_str()));
+                temp_vec.push_back(p);
+        }
+
+        //Erase first element of patient vector because it's the headers
+        temp_vec.erase(temp_vec.begin());
+        return temp_vec;
+}
+
+bool by_time(const Patient& p1, const Patient& p2){
+        return p1.survTime < p2.survTime;
 }
 
 // calculate K-M score for each patient
 void CalKMscore(vector<Patient>& Patients){
-    
+
+        int n = Patients.size();
+
+        sort(Patients.begin(), Patients.end(), by_time);
+        
+        int num_alive = n;
+        for(int i=0; i<n; i++){
+                num_alive = num_alive - Patients[i].status;
+                Patients[i].kmScore = ((double)num_alive)/((double)n);
+        }
+
 }
 
 // compare patients pairwise and calculate rank score
