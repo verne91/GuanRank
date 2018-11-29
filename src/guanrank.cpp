@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <typeinfo>
 
 using namespace std;
 
@@ -138,15 +139,15 @@ void normalize(vector<Patient>& Patients){
 }
 
 // output to csv file
-void outputToCSV(vector<Patient>& Patients, ofstream& ofile){
-    // ofstream ofile;
-    ofile.open("result.csv",ios::out | ios::trunc);
+void outputToCSV(vector<Patient>& Patients,char const *address){
+    ofstream ofile; 
+    ofile.open(address,ios::out|ios::trunc);
     ofile<<"Patient ID,Normalized Rank Score"<<endl;    //colnames
     for(int i=0;i<Patients.size();i++)
 
     {
         ofile<<Patients[i].PatientID<<",";
-        ofile<<Patients[i].normalizeScore<<",";
+        ofile<<Patients[i].normalizeScore;
         ofile<<endl;
     }
     ofile.close();
@@ -168,9 +169,9 @@ int main(int argc, char const *argv[])
     //step4: normalize GuanRank score
     normalize(Patients);
 
+
     //step 5: output Patient ID and GuanRank Score to a csv file
-    ofstream outfile (argv[2]);
-    outputToCSV(Patients, outfile);
+    outputToCSV(Patients,argv[2]);
 
     return 0;
 }
