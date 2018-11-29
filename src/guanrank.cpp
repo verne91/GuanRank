@@ -25,7 +25,7 @@ public:
     }
 };
 // read data from csv file
-vector<Patient> readFromCSV(ifstream inFile){
+vector<Patient> readFromCSV(ifstream& inFile){
         vector<Patient> temp_vec;
         string line;
 
@@ -52,12 +52,12 @@ bool by_time(const Patient& p1, const Patient& p2){
 }
 
 // calculate K-M score for each patient
-void CalKMscore(vector<Patient>& Patients){
+void calKMscore(vector<Patient>& Patients){
 
         int n = Patients.size();
 
         sort(Patients.begin(), Patients.end(), by_time);
-        
+
         int num_alive = n;
         for(int i=0; i<n; i++){
                 num_alive = num_alive - Patients[i].status;
@@ -138,34 +138,39 @@ void normalize(vector<Patient>& Patients){
 }
 
 // output to csv file
-void outputToCSV(vector<Patient>& Patients, ifstream outFile){
-    ofstream ofile;
+void outputToCSV(vector<Patient>& Patients, ofstream& ofile){
+    // ofstream ofile;
     ofile.open("result.csv",ios::out | ios::trunc);
     ofile<<"Patient ID,Normalized Rank Score"<<endl;    //colnames
     for(int i=0;i<Patients.size();i++)
-        
+
     {
-        ofile<<Patients[i].PatientID<<"，";
-        ofile<<Patients[i].normalizeScore<<"，";
+        ofile<<Patients[i].PatientID<<",";
+        ofile<<Patients[i].normalizeScore<<",";
         ofile<<endl;
     }
     ofile.close();
-    
+
 }
 
 int main(int argc, char const *argv[])
 {
     //step 1: read data from file into a vector of Patient
-    
+    ifstream infile (argv[1]);
+    vector<Patient> Patients = readFromCSV(infile);
+
     //step 2: calculate K-M score for each patient
-    
+    calKMscore(Patients);
+
     //step3: calculate GuanRank score for each patient based on pairwise comparison
-    
+    GuanRank(Patients);
+
     //step4: normalize GuanRank score
-    
+    normalize(Patients);
+
     //step 5: output Patient ID and GuanRank Score to a csv file
-    
+    ofstream outfile (argv[2]);
+    outputToCSV(Patients, outfile);
+
     return 0;
 }
-
-
