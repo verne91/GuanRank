@@ -138,11 +138,15 @@ void normalize(vector<Patient>& Patients){
     }
 }
 
+bool by_PatientID(const Patient& p1, const Patient& p2){
+        return atoi(p1.PatientID.c_str()) < atoi(p2.PatientID.c_str());
+}
 // output to csv file
 void outputToCSV(vector<Patient>& Patients,char const *address){
     ofstream ofile; 
     ofile.open(address,ios::out|ios::trunc);
     ofile<<"Patient ID,Normalized Rank Score"<<endl;    //colnames
+    sort(Patients.begin(), Patients.end(), by_PatientID);
     for(int i=0;i<Patients.size();i++)
 
     {
