@@ -1,7 +1,8 @@
-\name{guanrank}
-\alias{guanrank}
+\name{GranRank}
+\alias{GuanRank}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
+GuanRank
 %%  ~~function to do ... ~~
 }
 \description{
