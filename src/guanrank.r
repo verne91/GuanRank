@@ -3,8 +3,7 @@ guanrank <- function(infile){
   df <- read.csv(infile)
   n <- nrow(df)
 
-  pid <- .C("guanrank", infile, rank=double(n), pid=character(n))$pid
-  rank <- .C("guanrank", infile, rank=double(n), pid=character(n))$rank
+  res <- .C("guanrank", infile, rank=double(n), pid=character(n))
 
-  return (pid)
+  return (data.frame(res$pid, res$rank))
 }

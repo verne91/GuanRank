@@ -199,10 +199,10 @@ extern "C" {
     normalize(Patients);
     // cout << Patients[0].normalizeScore << endl;
 
-    pid[] = {"hello","world"};
+    sort(Patients.begin(), Patients.end(), by_PatientID);
 
     for (int i=0; i<Patients.size();i++){
-      // pid[i] = Patients[i].PatientID;
+      pid[i] = Patients[i].PatientID.c_str();
       rank[i] = Patients[i].normalizeScore;
     }
 
