@@ -1,9 +1,10 @@
 Package: GuanRank
 Type: Package
-Title: What the package does (short line)
+Title: GuanRank
 Version: 1.0
 Date: 2018-12-01
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Chen Sun, Wenjin Gu, Kevin Liao
+Maintainer: Chen Sun <cnsun@umich.edu>; Wenjin Gu <wenjingu@umich.edu>; Kevin Liao <ksliao@umich.edu>
+Description: GuanRank is a nonparametric survival prediction model generalizing right-censored data into standard regression problem through complete
+ranking. More detailed information can be found at http://guanlab.ccmb.med.umich.edu/yuanfang/Guan_rank.pdf
+License: MIT License
